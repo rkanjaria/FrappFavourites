@@ -1,4 +1,4 @@
-package android.test.com.frappfavourites.activities.adapters
+package android.test.com.frappfavourites.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

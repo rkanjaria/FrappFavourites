@@ -10,3 +10,6 @@ const val VIEWS = "views"
 const val TYPE = "type"
 const val IS_FAVOURITE = "is_favourite"
 const val BASE_URL = "http://54.169.233.100:8080/"
+
+const val INTERNSHIP = "internship"
+const val MISSION = "mission"

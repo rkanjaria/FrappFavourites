@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitHelper {
 
-    companion object {
+    companion object getRetroClient {
         fun create(): RetrofitApiService {
             val retrofit = Retrofit.Builder()
                     .client(getOkHttpClient())
