@@ -2,6 +2,7 @@ package android.test.com.frappfavourites.databases.enitities
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import android.test.com.frappfavourites.classes.*
 import com.google.gson.annotations.SerializedName
@@ -10,15 +11,16 @@ import com.google.gson.annotations.SerializedName
 data class InternMission(
 
         @PrimaryKey(autoGenerate = true)
-        @ColumnInfo(name = ID) val imId: Int,
+        @ColumnInfo(name = ID) var imId: Int = 0,
         @SerializedName(value = "name", alternate = ["title"])
-        @ColumnInfo(name = TITLE) val title: String?,
+        @ColumnInfo(name = TITLE) var title: String? = null,
         @SerializedName(value = "description")
-        @ColumnInfo(name = DESCRIPTION) val description: String?,
+        @ColumnInfo(name = DESCRIPTION) var description: String? = null,
         @SerializedName(value = "logo")
-        @ColumnInfo(name = LOGO) val logo: String?,
+        @ColumnInfo(name = LOGO) var logo: String? = null,
         @SerializedName(value = "views")
-        @ColumnInfo(name = VIEWS) val views: Int,
-        @ColumnInfo(name = TYPE) var imType: String?,
-        @ColumnInfo(name = IS_FAVOURITE) var isFavourite: Boolean = false
+        @ColumnInfo(name = VIEWS) var views: Int = -1,
+        @ColumnInfo(name = TYPE) var imType: String? = null,
+        @ColumnInfo(name = IS_FAVOURITE) var isFavourite: Boolean = false,
+        @Ignore var prop: String? = null
 )

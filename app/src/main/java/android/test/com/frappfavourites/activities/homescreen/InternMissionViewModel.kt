@@ -2,6 +2,9 @@ package android.test.com.frappfavourites.activities.homescreen
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
+import android.test.com.frappfavourites.classes.INTERNSHIP
+import android.test.com.frappfavourites.classes.MISSION
 import android.test.com.frappfavourites.databases.enitities.InternMission
 import android.test.com.frappfavourites.helper.RetrofitHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,31 +26,16 @@ class InternMissionViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun getInternshipAndMissionsFromApi() {
-
-        val combinedList = mutableListOf<InternMission>()
-
-        val internshipsObservable = RetrofitHelper.create().getInternships()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-
-        val missionsObservable = RetrofitHelper.create().getMissions()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    insertAllInternMission(it)
-                }
-
-        /*Observable.zip(internshipsObservable, missionsObservable,
-                BiFunction<List<InternMission>, List<InternMission>, List<InternMission>> { iList, mList ->
-                    iList.forEach { it.imType = INTERNSHIP }
-                    mList.forEach { it.imType = MISSION }
-                    combinedList.addAll(iList)
-                    combinedList.addAll(mList)
-                    return@BiFunction combinedList
-                }
-        ).doOnNext { insertAllInternMission(combinedList)
-
-            Toast.makeText(getApplication(), "no next", Toast.LENGTH_SHORT).show()
-        }*/
+        internMissionRepository.getInternshipAndMissionsFromApi()
     }
+
+    fun getAllFavourites(): LiveData<List<InternMission>>? {
+        return internMissionRepository.getAllFavourites()
+    }
+
+    fun setFavourite(isFavourite: Boolean, id: Int) {
+        internMissionRepository.setFavourite(isFavourite, id)
+    }
+
+    fun isTableEmpty() = internMissionRepository.isTableEmpty()
 }

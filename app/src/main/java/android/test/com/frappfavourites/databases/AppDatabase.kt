@@ -14,17 +14,18 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun internMissionDao(): InternMissionDao
 
     companion object {
+        @Volatile
         private var instance: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase? {
-            if (instance == null) {
-                synchronized(AppDatabase::class) {
-                    instance = Room.databaseBuilder(context.applicationContext,
-                            AppDatabase::class.java, DATABASE_NAME)
-                            .fallbackToDestructiveMigration()
-                            .build()
-                }
-            }
-            return instance
+        private val LOCK = Any()
+
+        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
+            instance ?: buildDatabase(context).also { instance = it }
         }
+
+        private fun buildDatabase(context: Context) =
+                Room.databaseBuilder(context.applicationContext,
+                        AppDatabase::class.java, DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
+                        .build()
     }
 }

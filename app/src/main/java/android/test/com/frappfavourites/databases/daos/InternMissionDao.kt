@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
+import android.test.com.frappfavourites.classes.ID
 import android.test.com.frappfavourites.classes.INTERN_MISSION_TABLE
 import android.test.com.frappfavourites.classes.IS_FAVOURITE
 import android.test.com.frappfavourites.classes.VIEWS
@@ -20,5 +21,11 @@ interface InternMissionDao {
 
     @Query("SELECT * FROM ${INTERN_MISSION_TABLE} WHERE ${IS_FAVOURITE} = 1 ORDER BY $VIEWS DESC")
     fun getAllFavourites(): LiveData<List<InternMission>>
+
+    @Query("SELECT COUNT (*) FROM ${INTERN_MISSION_TABLE}")
+    fun isTableEmpty(): Int
+
+    @Query("UPDATE ${INTERN_MISSION_TABLE} SET ${IS_FAVOURITE}= :isFavourite WHERE ${ID}= :id")
+    fun setFavourite(isFavourite: Boolean, id: Int)
 
 }

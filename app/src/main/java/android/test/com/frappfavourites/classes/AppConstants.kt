@@ -13,3 +13,7 @@ const val BASE_URL = "http://54.169.233.100:8080/"
 
 const val INTERNSHIP = "internship"
 const val MISSION = "mission"
+
+const val INTERNSHIP_VALUE = "Your Internships"
+const val MISSION_VALUE = "Your Missions"
+

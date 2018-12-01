@@ -9,8 +9,8 @@
     </style>
 
     <style name="ToolbarTextStyle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">@dimen/text_size_16</item>
-        <item name="android:fontFamily">@font/noto_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
     </style>
 
 
