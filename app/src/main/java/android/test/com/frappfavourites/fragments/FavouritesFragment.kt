@@ -3,11 +3,13 @@ package android.test.com.frappfavourites.fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.test.com.frappfavourites.R
 import android.test.com.frappfavourites.activities.homescreen.InternMissionViewModel
+import android.test.com.frappfavourites.activities.internmissiondetailscreen.InternMissionDetailsActivity
 import android.test.com.frappfavourites.adapters.HomeFavouritesRecyclerAdapter
 import android.test.com.frappfavourites.classes.*
 import android.test.com.frappfavourites.databases.enitities.InternMission
@@ -17,6 +19,12 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_favourites.*
 
 class FavouritesFragment : Fragment(), HomeFavouritesRecyclerAdapter.HomeAdapterListener {
+
+    override fun onClicked(internMission: InternMission) {
+        val internMissionDetails = Intent(context, InternMissionDetailsActivity::class.java)
+        internMissionDetails.putExtra(INTERNSHIP_VALUE, internMission)
+        startActivity(internMissionDetails)
+    }
 
     override fun onFavouriteClicked(internMission: InternMission) {
         imViewModel.setFavourite(!internMission.isFavourite, internMission.imId)
@@ -85,7 +93,7 @@ class FavouritesFragment : Fragment(), HomeFavouritesRecyclerAdapter.HomeAdapter
 
     private fun showEmptyLayout() {
         favouriteRecyclerView.visibility = View.GONE
-        emptyImage.loadImage(R.drawable.ic_favorite_blue)
+        emptyImage.loadImage(R.drawable.ic_favorite_border)
         emptyImage.visibility = View.VISIBLE
         emptyText.visibility = View.VISIBLE
     }

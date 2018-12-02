@@ -3,13 +3,15 @@ package android.test.com.frappfavourites.fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.test.com.frappfavourites.R
 import android.test.com.frappfavourites.activities.homescreen.InternMissionViewModel
+import android.test.com.frappfavourites.activities.internmissiondetailscreen.InternMissionDetailsActivity
 import android.test.com.frappfavourites.adapters.HomeFavouritesRecyclerAdapter
-import android.test.com.frappfavourites.classes.loadImage
+import android.test.com.frappfavourites.classes.INTERNSHIP_VALUE
 import android.test.com.frappfavourites.classes.showMessage
 import android.test.com.frappfavourites.databases.enitities.InternMission
 import android.view.LayoutInflater
@@ -18,6 +20,12 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(), HomeFavouritesRecyclerAdapter.HomeAdapterListener {
+
+    override fun onClicked(internMission: InternMission) {
+        val internMissionDetails = Intent(context, InternMissionDetailsActivity::class.java)
+        internMissionDetails.putExtra(INTERNSHIP_VALUE, internMission)
+        startActivity(internMissionDetails)
+    }
 
     override fun onFavouriteClicked(internMission: InternMission) {
         imViewModel.setFavourite(!internMission.isFavourite, internMission.imId)
@@ -38,13 +46,7 @@ class HomeFragment : Fragment(), HomeFavouritesRecyclerAdapter.HomeAdapterListen
         imViewModel.getInternshipAndMissionsFromDb()?.observe(this, object : Observer<List<InternMission>> {
             override fun onChanged(internMissionList: List<InternMission>?) {
                 progressBar.visibility = View.GONE
-
-                if (internMissionList != null && internMissionList.isNotEmpty()) {
-                    adapter.setInternMission(internMissionList)
-                    hideEmptyLayout()
-                } else {
-                    showEmptyLayout()
-                }
+                adapter.setInternMission(internMissionList)
             }
         })
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -59,19 +61,5 @@ class HomeFragment : Fragment(), HomeFavouritesRecyclerAdapter.HomeAdapterListen
         homeRecyclerView.setHasFixedSize(true)
         homeRecyclerView.layoutManager = LinearLayoutManager(context)
         homeRecyclerView.adapter = adapter
-    }
-
-
-    private fun showEmptyLayout() {
-        homeRecyclerView.visibility = View.GONE
-        emptyImage.loadImage(R.drawable.ic_home)
-        emptyImage.visibility = View.VISIBLE
-        emptyText.visibility = View.VISIBLE
-    }
-
-    private fun hideEmptyLayout() {
-        homeRecyclerView.visibility = View.VISIBLE
-        emptyImage.visibility = View.GONE
-        emptyText.visibility = View.GONE
     }
 }

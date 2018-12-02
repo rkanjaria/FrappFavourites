@@ -81,10 +81,15 @@ class HomeFavouritesRecyclerAdapter(var internMissionList: List<InternMission>, 
             mView.favouriteImage.setOnClickListener {
                 mListener?.onFavouriteClicked(internMission)
             }
+
+            mView.setOnClickListener {
+                mListener?.onClicked(internMission)
+            }
         }
     }
 
     interface HomeAdapterListener {
         fun onFavouriteClicked(internMission: InternMission)
+        fun onClicked(internMission: InternMission)
     }
 }

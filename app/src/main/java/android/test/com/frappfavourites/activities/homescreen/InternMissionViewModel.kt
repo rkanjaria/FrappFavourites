@@ -21,10 +21,6 @@ class InternMissionViewModel(application: Application) : AndroidViewModel(applic
 
     fun getInternshipAndMissionsFromDb() = internMissionRepository.getAllInternMission()
 
-    fun insertAllInternMission(internMissionList: List<InternMission>) {
-        internMissionRepository.insertAllInternMission(internMissionList)
-    }
-
     fun getInternshipAndMissionsFromApi() {
         internMissionRepository.getInternshipAndMissionsFromApi()
     }
